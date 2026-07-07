@@ -1,21 +1,21 @@
 <p align="center">
-  <img src="https://via.placeholder.com/800x400?text=Ubuntu+Cafe+%26+Lounge+Screenshot" alt="Ubuntu Cafe & Lounge UI Screenshot" width="800"/>
+  <img src="/images/hero-page-ui.png" alt="Ubuntu Cafe & Lounge UI Screenshot" width="800"/>
 </p>
 
 <h1 align="center">Ubuntu Cafe & Lounge (Smart Cafe Platform)</h1>
 
 <p align="center">
-  <a href="https://github.com/your-username/ubuntu-cafe-lounge">
+  <a href="https://github.com/s-aduk/ubuntu-smart-cafe">
     <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT">
   </a>
-  <a href="https://github.com/your-username/ubuntu-cafe-lounge/commits/main">
-    <img src="https://img.shields.io/github/last-commit/your-username/ubuntu-cafe-lounge" alt="Last Commit">
+  <a href="https://github.com/s-aduk/ubuntu-smart-cafe/commits/main">
+    <img src="https://img.shields.io/github/last-commit/s-aduk/ubuntu-smart-cafe" alt="Last Commit">
   </a>
-  <a href="https://github.com/your-username/ubuntu-cafe-lounge/issues">
-    <img src="https://img.shields.io/github/issues/your-username/ubuntu-cafe-lounge" alt="Issues">
+  <a href="https://github.com/s-aduk/ubuntu-smart-cafe/issues">
+    <img src="https://img.shields.io/github/issues/s-aduk/ubuntu-smart-cafe" alt="Issues">
   </a>
-  <a href="https://github.com/your-username/ubuntu-cafe-lounge/pulls">
-    <img src="https://img.shields.io/github/issues-pr/your-username/ubuntu-cafe-lounge" alt="Pull Requests">
+  <a href="https://github.com/s-aduk/ubuntu-smart-cafe/pulls">
+    <img src="https://img.shields.io/github/issues-pr/s-aduk/ubuntu-smart-cafe" alt="Pull Requests">
   </a>
 </p>
 
@@ -87,8 +87,8 @@ src/
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/ubuntu-cafe-lounge.git
-cd ubuntu-cafe-lounge
+git clone https://github.com/s-aduk/ubuntu-smart-cafe.git
+cd ubuntu-smart-cafe
 
 # Install dependencies
 npm install
