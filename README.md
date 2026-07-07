@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/images/hero-page-ui.png" alt="Ubuntu Cafe & Lounge UI Screenshot" width="800"/>
+  <img src="/public/images/hero-page-ui.png" alt="Ubuntu Cafe & Lounge UI Screenshot" width="800"/>
 </p>
 
 <h1 align="center">Ubuntu Cafe & Lounge (Smart Cafe Platform)</h1>
