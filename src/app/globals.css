@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #1a1a1a;
+  color: #fdfbf7;
+}
+
+::selection {
+  background-color: #d4af37;
+  color: #1a1a1a;
+}
+
+/* Thin gold scrollbar, tuned to the brand rather than left as browser default */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+::-webkit-scrollbar-thumb {
+  background: #4a3f28;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d4af37;
+}
+
+@layer components {
+  /* Section eyebrow label, used sparingly */
+  .eyebrow {
+    @apply font-body text-xs tracking-widest2 uppercase text-gold/80;
+  }
+
+  /* The signature motif: an "Ubuntu knot" — three interlocking rings standing
+     for the idea "I am because we are." Reused as the logo mark, a section
+     divider, and the footer border seam, so it reads as one deliberate thread
+     rather than decoration bolted on per-section. */
+  .ubuntu-knot {
+    display: inline-block;
+    filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.15));
+  }
+}
