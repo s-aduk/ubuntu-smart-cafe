@@ -10,7 +10,7 @@ const SOCIALS = [
 
 export default function Footer() {
   return (
-    <footer id="footer" className="relative bg-charcoal-dark">
+    <footer id="footer" className="relative bg-emerald-dark dark:bg-charcoal-dark">
       <PatternDivider />
 
       <div className="mx-auto max-w-7xl px-6 lg:px-10 py-16 grid sm:grid-cols-3 gap-10">

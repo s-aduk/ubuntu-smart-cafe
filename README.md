@@ -38,14 +38,16 @@
 ## 🌟 Features
 
 - **Responsive Design** - Works beautifully on mobile, tablet, and desktop
+- **Light & Dark Mode** - Premium theme toggle (Tailwind class-based dark mode + next-themes), persisted across visits, smooth CSS transitions between looks
+- **Dish Photography** - Every menu item has a hi-res image with hover-zoom, on both the home menu and the order page
 - **Interactive Menu** - Browse dishes, customize quantities, and add to cart
-- **Order Management** - Seamless checkout process with order confirmation
+- **Order Management** - Seamless checkout process with a loading state, order confirmation, and a graceful "backend offline" toast fallback
 - **Admin Dashboard** - View and manage incoming orders (password-protected)
 - **Reservation System** - UI-ready table booking form (backend integration pending)
 - **Smart Cart State** - Shared cart context between menu browsing and order page
 - **Static Export Optimized** - Ready for AWS S3 + CloudFront or AWS Amplify deployment
 - **Self-hosted Fonts** - No external font requests for better performance
-- **Brand-consistent Styling** - Custom color palette and typography
+- **Brand-consistent Styling** - Custom color palette and typography, fully theme-aware
 
 ## 🛠️ Tech Stack
 
@@ -107,9 +109,14 @@ cp .env.example .env.local
 
 Then add your values:
 ```
-NEXT_PUBLIC_API_BASE_URL=your_api_gateway_url
+NEXT_PUBLIC_AWS_API_URL=your_api_gateway_url
 NEXT_PUBLIC_ADMIN_PASSWORD=your_secure_password
 ```
+
+> Until `NEXT_PUBLIC_AWS_API_URL` points at a real API Gateway endpoint, the
+> app runs entirely on simulated data — placing an order or loading the
+> admin dashboard will show a toast noting the AWS backend is offline,
+> rather than breaking. See `src/utils/api.js` for the fallback logic.
 
 ## 📦 Available Scripts
 
@@ -135,6 +142,11 @@ NEXT_PUBLIC_ADMIN_PASSWORD=your_secure_password
 3. Configure CloudFront distribution in front of S3 bucket
 4. Set default root object to `index.html`
 
+> 📘 For the full system architecture diagram, the exact API data contract
+> the backend team needs to implement, and a phased checklist for
+> provisioning DynamoDB/Lambda/API Gateway and going live on Amplify, see
+> **[AWS_DEPLOYMENT_GUIDE.md](./AWS_DEPLOYMENT_GUIDE.md)**.
+
 ## 🎨 Brand Tokens
 
 | Role                  | Color                          | Tailwind Key   | Usage Examples              |
@@ -142,12 +154,31 @@ NEXT_PUBLIC_ADMIN_PASSWORD=your_secure_password
 | Background / Dark     | `#1A1A1A` (Deep Charcoal)      | `charcoal`     | Navbar, Footer backgrounds  |
 | Primary Accent        | `#C85A32` (Burnt Terracotta)   | `terracotta`   | Buttons, Links, Highlights  |
 | Light Background      | `#FDFBF7` (Premium Ivory)      | `ivory`        | Cards, Sections, Modals     |
-| Secondary Accent      | `#2C8FDFBF7` (Deep Emerald)       | `emerald`      | Secondary buttons, Icons    |
+| Secondary Accent      | `#2C4A3E` (Deep Emerald)       | `emerald`      | Secondary buttons, Icons    |
 | Highlight / Borders   | `#D4AF37` (Soft Muted Gold)    | `gold`         | Dividers, Borders, Accents  |
 
 **Typography:**
 - Headings: **Playfair Display** (self-hosted via `next/font/google`)
 - Body: **Plus Jakarta Sans** (self-hosted via `next/font/google`)
+
+### 🌗 Dark & Light Mode
+
+Theming uses Tailwind's class-based dark mode (`darkMode: 'class'` in
+`tailwind.config.js`) driven by `next-themes`, wrapped once around the app
+in `src/app/layout.js`. The visitor's choice persists in `localStorage`.
+
+| Mode  | Background         | Text / Structural Accent | Primary Details        |
+|-------|---------------------|---------------------------|--------------------------|
+| Dark (default) | Deep Charcoal `#1A1A1A` | Soft Muted Gold `#D4AF37` | Terracotta `#C85A32` |
+| Light | Premium Ivory `#FDFBF7` | Deep Emerald `#2C4A3E`    | Terracotta `#C85A32` |
+
+Toggle it via the sun/moon icon in the Navbar (also present in the admin
+header). Component classes follow Tailwind's `dark:` convention throughout
+— e.g. `text-charcoal dark:text-ivory` — so the same rule applies
+everywhere in the codebase. The Hero section is the one intentional
+exception: it always renders light text over a permanent dark image
+scrim, regardless of site-wide theme, since that reads better than
+swapping a photographic hero to light mode.
 
 ## 🔄 Smart Cafe Flow
 
@@ -161,7 +192,7 @@ NEXT_PUBLIC_ADMIN_PASSWORD=your_secure_password
 2. Review cart and proceed to checkout
 3. Enter customer information (name, phone, email)
 4. Choose Dine-in (with table number) or Pickup
-5. Submit order → shows spinner → success confirmation with Order ID
+5. Submit order → shows spinner → success confirmation with Order ID (if the AWS backend isn't reachable yet, a toast notes "Order simulated successfully! (AWS Backend Offline)" instead of failing silently)
 6. Cart automatically clears after successful order
 
 ### 👨‍💼 Admin Dashboard
@@ -178,11 +209,14 @@ NEXT_PUBLIC_ADMIN_PASSWORD=your_secure_password
 ## ⚙️ Architecture Notes
 
 ### API Integration
-All backend communication flows through `src/utils/api.js`:
+All backend communication flows through `src/utils/api.js`, driven by
+`NEXT_PUBLIC_AWS_API_URL`:
 - `submitOrder()` - Places new orders
 - `fetchOrders()` - Retrieves orders for admin dashboard
 - `updateOrderStatus()` - Updates order processing status
-- Includes simulated data fallback for development/testing
+- Every function returns a `simulated: true` flag when it had to fall back
+  to mock data (missing env var, unreachable backend, non-2xx response),
+  which the UI uses to show an honest toast rather than a silent success
 
 ### Static Export Configuration
 - Built with `next.config.js`: `output: 'export'` for static hosting

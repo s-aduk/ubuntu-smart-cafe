@@ -8,17 +8,17 @@ const HOURS = [
 
 export default function UbuntuStory() {
   return (
-    <section id="story" className="relative bg-charcoal py-28 lg:py-36">
+    <section id="story" className="relative bg-ivory dark:bg-charcoal py-28 lg:py-36">
       <div className="mx-auto max-w-7xl px-6 lg:px-10 grid lg:grid-cols-2 gap-16 lg:gap-20 items-start">
         {/* Column 1 — philosophy */}
         <div>
           <span className="eyebrow">The Ubuntu Story</span>
-          <h2 className="font-display text-4xl sm:text-5xl text-ivory mt-4 leading-tight">
+          <h2 className="font-display text-4xl sm:text-5xl text-charcoal dark:text-ivory mt-4 leading-tight">
             &ldquo;I am because
-            <span className="text-emerald-light"> we are.</span>&rdquo;
+            <span className="text-emerald dark:text-emerald-light"> we are.</span>&rdquo;
           </h2>
 
-          <div className="mt-8 space-y-5 font-body text-ivory/75 leading-relaxed max-w-lg">
+          <div className="mt-8 space-y-5 font-body text-charcoal/70 dark:text-ivory/75 leading-relaxed max-w-lg">
             <p>
               Ubuntu is a philosophy carried across Southern and East Africa
               &mdash; a belief that our humanity is bound up in one another&rsquo;s.
@@ -40,26 +40,26 @@ export default function UbuntuStory() {
 
         {/* Column 2 — hours & location, paired with image */}
         <div className="relative">
-          <div className="rounded-2xl overflow-hidden border border-gold/10">
+          <div className="rounded-2xl overflow-hidden shadow-md border border-emerald/10 dark:border-gold/10 group">
             <img
               src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80"
               alt="Communal dining table set with African-inspired dishes"
-              className="w-full h-72 sm:h-96 object-cover"
+              className="w-full h-72 sm:h-96 object-cover group-hover:scale-105 transition-transform duration-300"
             />
           </div>
 
           <div className="mt-10 grid sm:grid-cols-2 gap-10">
             <div>
-              <h3 className="font-display text-xl text-gold mb-4">
+              <h3 className="font-display text-xl text-emerald dark:text-gold mb-4">
                 Hours of Gathering
               </h3>
               <ul className="space-y-3">
                 {HOURS.map((h) => (
                   <li
                     key={h.day}
-                    className="font-body text-sm text-ivory/70 flex flex-col"
+                    className="font-body text-sm text-charcoal/60 dark:text-ivory/70 flex flex-col"
                   >
-                    <span className="text-ivory/90">{h.day}</span>
+                    <span className="text-charcoal/85 dark:text-ivory/90">{h.day}</span>
                     <span>{h.time}</span>
                   </li>
                 ))}
@@ -67,17 +67,17 @@ export default function UbuntuStory() {
             </div>
 
             <div>
-              <h3 className="font-display text-xl text-gold mb-4">
+              <h3 className="font-display text-xl text-emerald dark:text-gold mb-4">
                 Find the Table
               </h3>
-              <p className="font-body text-sm text-ivory/70 leading-relaxed">
+              <p className="font-body text-sm text-charcoal/60 dark:text-ivory/70 leading-relaxed">
                 14 Adum Terrace
                 <br />
                 Kumasi, Ashanti Region
                 <br />
                 Ghana
               </p>
-              <p className="font-body text-sm text-ivory/70 mt-4">
+              <p className="font-body text-sm text-charcoal/60 dark:text-ivory/70 mt-4">
                 +233 24 000 0000
                 <br />
                 hello@ubuntucafelounge.com

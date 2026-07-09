@@ -21,6 +21,8 @@ export const menuData = [
         description:
           'Char-grilled beef in a smoked peanut and chili spice crust, served with pickled onion.',
         price: 14,
+        image:
+          'https://images.unsplash.com/photo-1767974968707-db3d448d4ef3?auto=format&fit=crop&w=1200&q=80',
         tags: ['Signature', 'Spiced'],
       },
       {
@@ -29,6 +31,8 @@ export const menuData = [
         description:
           'Black-eyed pea fritters, whipped scotch bonnet butter, micro coriander.',
         price: 11,
+        image:
+          'https://images.unsplash.com/photo-1665332561290-cc6757172890?auto=format&fit=crop&w=1200&q=80',
         tags: ['Vegetarian'],
       },
       {
@@ -37,6 +41,8 @@ export const menuData = [
         description:
           'Hibiscus and ginger cured oysters on the half shell, citrus mignonette.',
         price: 16,
+        image:
+          'https://images.unsplash.com/photo-1665401015549-712c0dc5ef85?auto=format&fit=crop&w=1200&q=80',
         tags: ['Chef\u2019s Pick'],
       },
       {
@@ -45,6 +51,8 @@ export const menuData = [
         description:
           'Spiced lentil, minced lamb, and peri-peri chicken samosas, tamarind dip.',
         price: 13,
+        image:
+          'https://images.unsplash.com/photo-1665332305771-e49a5dd5ba80?auto=format&fit=crop&w=1200&q=80',
         tags: [],
       },
     ],
@@ -61,6 +69,8 @@ export const menuData = [
         description:
           'Slow-smoked tomato jollof, char-grilled suya-spiced sirloin, crisp plantain.',
         price: 28,
+        image:
+          'https://images.unsplash.com/photo-1664993101841-036f189719b6?auto=format&fit=crop&w=1200&q=80',
         tags: ['Signature'],
       },
       {
@@ -69,6 +79,8 @@ export const menuData = [
         description:
           'Braised lamb shoulder, apricot, preserved lemon, and toasted almonds, served with couscous.',
         price: 32,
+        image:
+          'https://images.unsplash.com/photo-1661083098412-054431ab7112?auto=format&fit=crop&w=1200&q=80',
         tags: ['Slow-Braised'],
       },
       {
@@ -77,6 +89,8 @@ export const menuData = [
         description:
           'Spiced minced beef bake with a golden egg custard top, turmeric rice, chutney.',
         price: 26,
+        image:
+          'https://images.unsplash.com/photo-1665332195309-9d75071138f0?auto=format&fit=crop&w=1200&q=80',
         tags: ['Chef\u2019s Pick'],
       },
       {
@@ -85,6 +99,8 @@ export const menuData = [
         description:
           'Sourdough injera with doro wat, misir wat, and gomen, served family-style.',
         price: 30,
+        image:
+          'https://images.unsplash.com/photo-1665400808116-f0e6339b7e9a?auto=format&fit=crop&w=1200&q=80',
         tags: ['Shareable', 'Vegetarian Option'],
       },
       {
@@ -93,6 +109,8 @@ export const menuData = [
         description:
           'Whole grilled tilapia, peri-peri glaze, charred corn, coconut rice.',
         price: 27,
+        image:
+          'https://images.unsplash.com/photo-1665554837563-3782d21a676b?auto=format&fit=crop&w=1200&q=80',
         tags: [],
       },
     ],
@@ -109,6 +127,8 @@ export const menuData = [
         description:
           'Hibiscus, ginger, and clove infusion, served chilled over hand-cut ice.',
         price: 8,
+        image:
+          'https://images.unsplash.com/photo-1499638673689-79a0b5115d87?auto=format&fit=crop&w=1200&q=80',
         tags: ['Signature', 'Non-Alcoholic'],
       },
       {
@@ -117,6 +137,8 @@ export const menuData = [
         description:
           'Single-origin Kenyan AA beans, bright acidity, notes of blackcurrant.',
         price: 6,
+        image:
+          'https://images.unsplash.com/photo-1755284489379-e32c84a185ec?auto=format&fit=crop&w=1200&q=80',
         tags: [],
       },
       {
@@ -125,6 +147,8 @@ export const menuData = [
         description:
           'Fermented palm wine, aged rum, bitters, orange peel.',
         price: 15,
+        image:
+          'https://images.unsplash.com/photo-1601390395693-364c0e22031a?auto=format&fit=crop&w=1200&q=80',
         tags: ['Cocktail'],
       },
       {
@@ -133,6 +157,8 @@ export const menuData = [
         description:
           'Red bush tea, Amarula cream liqueur, warm spice, served hot.',
         price: 13,
+        image:
+          'https://images.unsplash.com/photo-1470752354724-60a1d2b1907f?auto=format&fit=crop&w=1200&q=80',
         tags: ['Cocktail'],
       },
     ],

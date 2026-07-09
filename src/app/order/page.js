@@ -13,14 +13,14 @@ export default function OrderPage() {
   return (
     <>
       <Navbar />
-      <main className="bg-charcoal min-h-screen pt-32 pb-24">
+      <main className="bg-ivory dark:bg-charcoal min-h-screen pt-32 pb-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="max-w-2xl">
             <span className="eyebrow">Order Online</span>
-            <h1 className="font-display text-4xl sm:text-5xl text-ivory mt-4">
+            <h1 className="font-display text-4xl sm:text-5xl text-charcoal dark:text-ivory mt-4">
               Build Your Table
             </h1>
-            <p className="mt-5 font-body text-ivory/65 leading-relaxed">
+            <p className="mt-5 font-body text-charcoal/65 dark:text-ivory/65 leading-relaxed">
               Choose your dishes, tell us where to send them, and we&rsquo;ll
               take it from there.
             </p>
