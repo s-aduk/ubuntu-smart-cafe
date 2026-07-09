@@ -287,6 +287,14 @@ optimistically and doesn't strictly require the response body back).
      `status` later if the dashboard needs server-side filtering by status
 
 2. **Write three Lambda functions (Node.js 20.x runtime)**
+
+   > ✅ Already implemented in [`/lambda`](./lambda) — `createOrder`,
+   > `listOrders`, and `updateOrderStatus`, each with its own tested
+   > handler, `package.json`, and a mocked-DynamoDB `test.js`. See
+   > [`lambda/README.md`](./lambda/README.md) for deployment steps and
+   > IAM policies. The summary below still applies — it's what those
+   > functions do.
+
    - `createOrder` — validates the body against the contract in Section
      2.3, generates `orderId` (e.g. `ORD-` + a short UUID/timestamp) and
      `receivedAt`, sets `status: "Pending"`, writes via `PutCommand`,

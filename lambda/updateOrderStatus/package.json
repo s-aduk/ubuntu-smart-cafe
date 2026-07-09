@@ -1,0 +1,17 @@
+{
+  "name": "ubuntu-cafe-update-order-status",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lambda handler for PATCH /orders/{orderId} \u2014 Ubuntu Cafe & Lounge",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.600.0",
+    "@aws-sdk/lib-dynamodb": "^3.600.0"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "devDependencies": {
+    "aws-sdk-client-mock": "^4.0.0"
+  }
+}

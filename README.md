@@ -45,7 +45,7 @@
 - **Admin Dashboard** - View and manage incoming orders (password-protected)
 - **Reservation System** - UI-ready table booking form (backend integration pending)
 - **Smart Cart State** - Shared cart context between menu browsing and order page
-- **Static Export Optimized** - Ready for AWS Amplify deployment
+- **Static Export Optimized** - Ready for AWS S3 + CloudFront or AWS Amplify deployment
 - **Self-hosted Fonts** - No external font requests for better performance
 - **Brand-consistent Styling** - Custom color palette and typography, fully theme-aware
 
@@ -129,12 +129,18 @@ NEXT_PUBLIC_ADMIN_PASSWORD=your_secure_password
 
 ## ☁️ Deployment Options
 
-### AWS Amplify (Recommended)
+### Option 1: AWS Amplify (Recommended)
 1. Push repository to GitHub/GitLab/CodeCommit
 2. In AWS Amplify Console, connect your repository
 3. Set build command: `npm run build`
 4. Set output directory: `out`
-5. Deploy — Amplify serves static files via CDN
+5. Deploy - Amplify serves static files via CDN
+
+### Option 2: Amazon S3 + CloudFront
+1. Build locally: `npm run build`
+2. Sync to S3 bucket: `aws s3 sync out/ s3://YOUR_BUCKET_NAME --delete`
+3. Configure CloudFront distribution in front of S3 bucket
+4. Set default root object to `index.html`
 
 > 📘 For the full system architecture diagram, the exact API data contract
 > the backend team needs to implement, and a phased checklist for
@@ -215,7 +221,7 @@ All backend communication flows through `src/utils/api.js`, driven by
 ### Static Export Configuration
 - Built with `next.config.js`: `output: 'export'` for static hosting
 - Images unoptimized (`images: { unoptimized: true }`) due to static nature
-- Trailing slashes enabled for static website compatibility
+- Trailing slashes enabled for S3 static website compatibility
 - No server-side rendering dependencies
 
 ### Security Note

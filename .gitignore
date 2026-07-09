@@ -23,3 +23,7 @@ yarn-error.log*
 
 #MD Files
 CLAUDE.md
+AGENTS.md
+
+#Backend Folder
+backend/
