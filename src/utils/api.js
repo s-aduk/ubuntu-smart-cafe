@@ -1,38 +1,29 @@
 // src/utils/api.js
 //
 // Single seam between the frontend and the AWS serverless backend.
-// Every network call in the app funnels through this file, so wiring up
-// the real infrastructure later is a one-line change: set
-// NEXT_PUBLIC_API_BASE_URL to the deployed API Gateway invoke URL.
+// Every network call in the app funnels through this file. To go live,
+// the infrastructure team sets NEXT_PUBLIC_AWS_API_URL (in the AWS Amplify
+// console, or a local .env.local) to the deployed API Gateway invoke URL
+// and rebuilds — no other code changes needed.
 //
 // Intended shape of the backend, once built:
 //   API Gateway (REST or HTTP API)
-//     POST /orders  -> Lambda (createOrder)  -> DynamoDB.putItem
-//                                             -> (optional) SES confirmation email
-//     GET  /orders  -> Lambda (listOrders)   -> DynamoDB.scan / query
-//     PATCH /orders/{orderId} -> Lambda (updateOrderStatus) -> DynamoDB.updateItem
+//     POST /orders            -> Lambda (createOrder)  -> DynamoDB.putItem
+//                                                        -> (optional) SES confirmation email
+//     GET  /orders             -> Lambda (listOrders)   -> DynamoDB.scan / query
+//     PATCH /orders/{orderId}  -> Lambda (updateOrderStatus) -> DynamoDB.updateItem
 //
-// Until that API Gateway URL exists, every function below falls back to a
-// simulated response (with a realistic delay) so the full loading ->
-// success UI flow can be built and demoed end-to-end today.
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
-
-class ApiError extends Error {
-  constructor(message, status) {
-    super(message);
-    this.name = 'ApiError';
-    this.status = status;
-  }
-}
+// Graceful fallback: if NEXT_PUBLIC_AWS_API_URL is missing, or the request to
+// it fails for any reason (offline backend, network error, 5xx, timeout),
+// every function below falls back to a simulated response instead of
+// breaking the UI. Callers can check the `simulated: true` flag on the
+// result to surface an honest "this wasn't really saved yet" notice
+// (see useToast() calls in CartPanel.jsx and OrdersDashboard.jsx) rather
+// than silently pretending everything succeeded.
+const API_URL = process.env.NEXT_PUBLIC_AWS_API_URL || 'YOUR_MOCK_API_FALLBACK';
 
 async function request(path, options = {}) {
-  if (!API_BASE_URL) {
-    // No infrastructure deployed yet — signal callers to use their fallback.
-    throw new ApiError('NEXT_PUBLIC_API_BASE_URL is not configured.', 0);
-  }
-
-  const res = await fetch(`${API_BASE_URL}${path}`, {
+  const res = await fetch(`${API_URL}${path}`, {
     ...options,
     headers: {
       'Content-Type': 'application/json',
@@ -41,10 +32,9 @@ async function request(path, options = {}) {
   });
 
   if (!res.ok) {
-    throw new ApiError(`Request to ${path} failed (${res.status})`, res.status);
+    throw new Error(`Request to ${path} failed (${res.status})`);
   }
 
-  // 204 No Content, etc.
   const text = await res.text();
   return text ? JSON.parse(text) : null;
 }
@@ -61,21 +51,18 @@ function simulateLatency(ms = 900) {
  * email to the customer.
  *
  * @param {object} orderData
- * @param {{name: string, phone: string, email: string}} orderData.customer
- * @param {Array<{id: string, name: string, price: number, quantity: number}>} orderData.items
- * @param {number} orderData.subtotal
- * @param {{type: 'table' | 'pickup', tableNumber?: string}} orderData.fulfillment
- * @returns {Promise<{orderId: string, status: string}>}
+ * @returns {Promise<{orderId: string, status: string, simulated: boolean}>}
  */
 export async function submitOrder(orderData) {
   try {
-    return await request('/orders', {
+    const result = await request('/orders', {
       method: 'POST',
       body: JSON.stringify(orderData),
     });
+    return { ...result, simulated: false };
   } catch (err) {
     console.warn(
-      '[api] submitOrder: no backend configured yet, using a simulated response.',
+      '[api] submitOrder: AWS backend unreachable, using a simulated response.',
       err.message
     );
     await simulateLatency();
@@ -83,6 +70,7 @@ export async function submitOrder(orderData) {
       orderId: `MOCK-${Date.now().toString(36).toUpperCase()}`,
       status: 'received',
       receivedAt: new Date().toISOString(),
+      simulated: true,
     };
   }
 }
@@ -90,48 +78,49 @@ export async function submitOrder(orderData) {
 /**
  * GET /orders
  *
- * Populates the Owner Admin Dashboard. Once the backend exists, this reads
- * live rows out of DynamoDB via API Gateway. Until then, it resolves with
- * realistic mock data so the dashboard UI can be fully built and tested.
+ * Populates the Owner Admin Dashboard from DynamoDB via API Gateway. Falls
+ * back to realistic mock orders if the backend isn't reachable yet.
  *
- * @returns {Promise<Array<Order>>}
+ * @returns {Promise<{orders: Array<object>, simulated: boolean}>}
  */
 export async function fetchOrders() {
   try {
-    return await request('/orders', { method: 'GET' });
+    const result = await request('/orders', { method: 'GET' });
+    return { orders: result, simulated: false };
   } catch (err) {
     console.warn(
-      '[api] fetchOrders: no backend configured yet, using mock orders.',
+      '[api] fetchOrders: AWS backend unreachable, using mock orders.',
       err.message
     );
     await simulateLatency(700);
-    return MOCK_ORDERS;
+    return { orders: MOCK_ORDERS, simulated: true };
   }
 }
 
 /**
  * PATCH /orders/{orderId}
  *
- * Updates an order's status (e.g. Pending -> Preparing -> Ready ->
- * Completed). Until the backend exists, the admin dashboard applies this
- * change to its local state only.
+ * Updates an order's status (Pending -> Preparing -> Ready -> Completed).
+ * Falls back to a locally-accepted update if the backend isn't reachable.
  *
  * @param {string} orderId
  * @param {string} status
+ * @returns {Promise<{orderId: string, status: string, simulated: boolean}>}
  */
 export async function updateOrderStatus(orderId, status) {
   try {
-    return await request(`/orders/${orderId}`, {
+    const result = await request(`/orders/${orderId}`, {
       method: 'PATCH',
       body: JSON.stringify({ status }),
     });
+    return { ...result, simulated: false };
   } catch (err) {
     console.warn(
-      '[api] updateOrderStatus: no backend configured yet, updating locally only.',
+      '[api] updateOrderStatus: AWS backend unreachable, updating locally only.',
       err.message
     );
     await simulateLatency(400);
-    return { orderId, status };
+    return { orderId, status, simulated: true };
   }
 }
 

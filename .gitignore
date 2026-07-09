@@ -6,6 +6,7 @@ node_modules/
 
 #Production builds
 build/
+out/
 
 #Environment Variables
 .env

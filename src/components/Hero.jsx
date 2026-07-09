@@ -4,7 +4,7 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative min-h-[100svh] flex items-end overflow-hidden bg-charcoal"
+      className="relative min-h-[100svh] flex items-end overflow-hidden bg-ivory dark:bg-charcoal"
     >
       {/* Placeholder imagery — swap these src values for licensed photography
           of the actual interior and plated dishes before launch. */}
@@ -21,7 +21,7 @@ export default function Hero() {
       <div className="relative z-10 mx-auto max-w-7xl w-full px-6 lg:px-10 pb-24 pt-40">
         <div className="flex items-center gap-3 mb-8">
           <UbuntuKnot className="h-6 w-6" />
-          <span className="eyebrow">Modern African Dining &amp; Lounge</span>
+          <span className="eyebrow-on-image">Modern African Dining &amp; Lounge</span>
         </div>
 
         <h1 className="font-display text-5xl sm:text-6xl lg:text-8xl leading-[1.02] text-ivory max-w-4xl">

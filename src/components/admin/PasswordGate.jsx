@@ -33,14 +33,14 @@ export default function PasswordGate({ onAuthenticated }) {
   };
 
   return (
-    <div className="min-h-screen bg-charcoal flex items-center justify-center px-6">
-      <div className="w-full max-w-sm rounded-2xl border border-gold/15 bg-charcoal-light/60 backdrop-blur-sm p-8 sm:p-10">
+    <div className="min-h-screen bg-ivory dark:bg-charcoal flex items-center justify-center px-6">
+      <div className="w-full max-w-sm rounded-2xl border border-emerald/15 dark:border-gold/15 bg-white/70 dark:bg-charcoal-light/60 backdrop-blur-sm p-8 sm:p-10">
         <div className="flex flex-col items-center text-center">
           <UbuntuKnot className="h-9 w-9" />
-          <h1 className="font-display text-2xl text-ivory mt-5">
+          <h1 className="font-display text-2xl text-charcoal dark:text-ivory mt-5">
             Owner Dashboard
           </h1>
-          <p className="mt-2 font-body text-sm text-ivory/50">
+          <p className="mt-2 font-body text-sm text-charcoal/50 dark:text-ivory/50">
             Enter the admin password to view incoming orders.
           </p>
         </div>
@@ -49,7 +49,7 @@ export default function PasswordGate({ onAuthenticated }) {
           <div>
             <label
               htmlFor="admin-password"
-              className="font-body text-xs uppercase tracking-wide text-ivory/50"
+              className="font-body text-xs uppercase tracking-wide text-charcoal/50 dark:text-ivory/50"
             >
               Password
             </label>
@@ -59,7 +59,7 @@ export default function PasswordGate({ onAuthenticated }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoFocus
-              className="mt-2 w-full bg-transparent border-b border-ivory/20 focus:border-gold outline-none py-2.5 font-body text-sm text-ivory transition-colors duration-300"
+              className="mt-2 w-full bg-transparent border-b border-charcoal/20 dark:border-ivory/20 focus:border-emerald dark:focus:border-gold outline-none py-2.5 font-body text-sm text-charcoal dark:text-ivory transition-colors duration-300"
             />
           </div>
 

@@ -6,9 +6,16 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Dark is the core luxury look and the default; .light overrides it. */
 body {
   background-color: #1a1a1a;
   color: #fdfbf7;
+  transition: background-color 400ms ease, color 400ms ease;
+}
+
+html.light body {
+  background-color: #fdfbf7;
+  color: #1a1a1a;
 }
 
 ::selection {
@@ -16,7 +23,12 @@ body {
   color: #1a1a1a;
 }
 
-/* Thin gold scrollbar, tuned to the brand rather than left as browser default */
+html.light ::selection {
+  background-color: #2c4a3e;
+  color: #fdfbf7;
+}
+
+/* Thin gold scrollbar in dark mode, muted emerald in light mode */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -30,11 +42,53 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #d4af37;
 }
+html.light ::-webkit-scrollbar-track {
+  background: #fdfbf7;
+}
+html.light ::-webkit-scrollbar-thumb {
+  background: #d8cdb0;
+}
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #2c4a3e;
+}
+
+/* Every element transitions color/background smoothly on theme toggle,
+   without transitioning layout-affecting properties (avoids jank). */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, fill, stroke,
+    box-shadow;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
 
 @layer components {
-  /* Section eyebrow label, used sparingly */
+  @keyframes toast-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-toast-in {
+    animation: toast-in 320ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Section eyebrow label. Theme-aware: emerald in light mode (per the
+     brand's "high-contrast typography" role), gold in dark mode. */
   .eyebrow {
-    @apply font-body text-xs tracking-widest2 uppercase text-gold/80;
+    @apply font-body text-xs tracking-widest2 uppercase text-emerald dark:text-gold/80;
+  }
+
+  /* Same eyebrow role, but for use on top of the Hero's permanent dark
+     image scrim, where gold always reads correctly regardless of the
+     site-wide theme. */
+  .eyebrow-on-image {
+    @apply font-body text-xs tracking-widest2 uppercase text-gold/90;
   }
 
   /* The signature motif: an "Ubuntu knot" — three interlocking rings standing
