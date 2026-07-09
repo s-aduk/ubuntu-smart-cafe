@@ -201,7 +201,7 @@ Every response includes the header:
 Access-Control-Allow-Origin: *
 ```
 
-The frontend is a static site hosted on S3/CloudFront, which runs on a different origin than the API Gateway URL. Browsers block cross-origin requests unless the server explicitly allows it. This header tells the browser: "any origin is allowed to read this response."
+The frontend is a static site hosted on AWS Amplify, which runs on a different origin than the API Gateway URL. Browsers block cross-origin requests unless the server explicitly allows it. This header tells the browser: "any origin is allowed to read this response."
 
 ---
 
