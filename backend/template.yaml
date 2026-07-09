@@ -148,6 +148,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref OrderTable
+          FROM_EMAIL: 
 
   LambdaInvokePermission:
     Type: AWS::Lambda::Permission
