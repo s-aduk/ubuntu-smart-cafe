@@ -40,13 +40,21 @@ Resources:
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
       Policies:
-        - PolicyName: DynamoDBWrite
+        - PolicyName: DynamoDBWriteAndSESSend
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
+
               - Effect: Allow
-                Action: dynamodb:PutItem
+                Action: 
+                  - dynamodb:PutItem
                 Resource: !GetAtt OrderTable.Arn
+
+              - Effect: Allow
+                Action: 
+                  - ses:SendEmail
+                  - ses:SendRawEmail
+                Resource: "*"
 
   # --------------------------------------------------------------------------
   # Lambda
